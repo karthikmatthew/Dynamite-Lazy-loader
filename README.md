@@ -1,1 +1,1 @@
-# Dynamite-Lazy-loader
+# Lazy-loader
