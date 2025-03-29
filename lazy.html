@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazy Loader </title>
+    <style>
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 50%; /* Reduced size to 50% */
+            height: auto;
+        }
+        .loading {
+            background: url('loading-spinner.gif') no-repeat center center;
+            height: 200px; /* Placeholder height */
+        }
+    </style>
+</head>
+<body>
+    <h1>Lazy Loader </h1>
+    <img class="loading" data-src="https://i.pinimg.com/736x/39/56/34/3956343feab920b59d7e58c7940b7d03.jpg" alt="Image 1" />
+    <img class="loading" data-src="https://i.pinimg.com/736x/46/15/88/4615888e2a4bd28832da02b6e61f5738.jpg" alt="Image 2" />
+    <img class="loading" data-src="https://i.pinimg.com/736x/aa/80/27/aa802701785954493bf06027ef0b1c2d.jpg" alt="Image 3" />
+
+    <script>
+        const images = document.querySelectorAll('img[data-src]');
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const lazyLoad = (image) => {
+            const src = image.getAttribute('data-src');
+            if (!src) return;
+            setTimeout(() => {
+                image.src = src;
+                image.onload = () => {
+                    image.classList.remove('loading');
+                };
+                image.removeAttribute('data-src');
+            }, 1000); // Delay of 1 second
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    lazyLoad(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        images.forEach(image => {
+            observer.observe(image);
+        });
+    </script>
+</body>
+</html>
