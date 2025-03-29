@@ -16,4 +16,4 @@ This project demonstrates **Lazy Loading**, a technique that **improves webpage 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/lazy-loading.git
+git clone https://github.com/karthikmatthew/Dynamite-Lazy-loader
